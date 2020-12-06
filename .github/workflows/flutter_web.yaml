@@ -1,34 +1,21 @@
-name: Flutter Web
+name: Gh-Pages
 
 on:
   push:
-    branches:
-      - main
-      
+    branches: [ master ]
+
 jobs:
   build:
-    runs-on: windows-latest
-    
+    runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      
-    - name: Setup Flutter
-      uses: subosito/flutter-action@v1
-      with:
-        channel: 'beta'
-        
-    - name: Enable Flutter web 
-      run: flutter config --enable-web
-      
-    - name: Install dependencies
-      run: flutter packages get
-      
-    - name: Build web
-      run: flutter build web
-      
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.token }}
-        publish_dir: ./build/web
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'beta'
+      - uses: erickzanardo/flutter-gh-pages@v2
+        with:
+          workingDir: example
+      - uses: erickzanardo/flutter-gh-pages@v2
+        with:
+          useCanvasKit: true
